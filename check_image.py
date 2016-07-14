@@ -3,7 +3,8 @@
 import os
 import imghdr
 
-disallowed_chars = ['$', '£', '*', '&', '%', ' ', '[', ']']
+disallowed_chars = ['$', '£', '*', '&', '%', ' ', '[', ']', '@', '€', '^', '+', '(', ')',
+                    '`', '/', ':', ';', '|', '}', '{']
 skip_files = ['Thumbs.db', '.DS_Store']
 allowed_types = ['jpg', 'jpeg', 'png', 'gif']
 
@@ -16,7 +17,7 @@ for root, dir, files in os.walk(os.path.dirname('.', topdown=False):
             fail = False
             for each_letter in list(name):
                 if each_letter in disallowed_chars:
-                    print '\033[1m' + name + "\033[0m |\033[91m INVALID CHARS \033[0m"
+                    print '\033[1m' + name + "\033[0m |\033[91m INVALID CHARS ("+each_letter+")\033[0m"
                     fail = True
                     fails += 1
 
@@ -33,9 +34,6 @@ for root, dir, files in os.walk(os.path.dirname('.', topdown=False):
             if fail == False: 
                 print name  + " |\033[92m PASSED \033[0m"
 
-if fails <= 0:
-    text_color = "\033[92m"
-else: 
-    text_color = "\033[91m"
+text_color = "\033[92m" if fails <= 0 else "\033[91m"
 
 print "\n" + text_color + str(fails) + " FILES FAILED! \033[0m"
